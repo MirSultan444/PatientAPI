@@ -11,5 +11,6 @@ namespace PatientAPI.Interfaces
         void DeletePatient(int patientId);
         PatientDetailView GetPatient(int patientId);
         Task<PatientListView> GetPatients();
+        byte[] ExportPatientsToExcel();
     }
 }

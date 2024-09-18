@@ -3,6 +3,10 @@ using PatientAPI.Interfaces;
 using PatientAPI.ViewModels.Patient.Request;
 using PatientAPI.ViewModels.Patient.Response;
 using System.Threading.Tasks;
+using OfficeOpenXml;
+using System.IO;
+using System.Linq;
+
 
 namespace PatientAPI.Controllers
 {
@@ -53,6 +57,15 @@ namespace PatientAPI.Controllers
         {
             var result = await _patientService.GetPatients();
             return result;
+        }
+
+        [HttpGet("export")]
+        public IActionResult ExportPatients()
+        {
+            var excelFile = _patientService.ExportPatientsToExcel();
+            var fileName = $"Patients_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+
+            return File(excelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
     }
 }

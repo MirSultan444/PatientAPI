@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PatientAPI.Models;
 using PatientAPI.Interfaces;
 using PatientAPI.Services;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+ExcelPackage.LicenseContext = LicenseContext.Commercial;
 
 var app = builder.Build();
 
