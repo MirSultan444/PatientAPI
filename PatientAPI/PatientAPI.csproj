@@ -19,4 +19,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UploadedPhotos\" />
+    <Folder Include="Uploaded\" />
+  </ItemGroup>
+
 </Project>

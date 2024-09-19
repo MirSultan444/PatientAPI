@@ -6,7 +6,6 @@ using PatientAPI.ViewModels.Patient.Response;
 using OfficeOpenXml;
 using System.IO;
 
-
 namespace PatientAPI.Services
 {
     public class PatientService : IPatientService
@@ -104,6 +103,27 @@ namespace PatientAPI.Services
             }
 
             return package.GetAsByteArray();
+        }
+
+        public async Task<Patient> GetPatientById(int patientId)
+        {
+            return await _context.Patients.FindAsync(patientId);
+        }
+
+        public async Task UpdatePatient(Patient patient)
+        {
+            _context.Patients.Update(patient);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdatePatientPhoto(int patientId, string photoUrl)
+        {
+            var patient = await GetPatientById(patientId);
+            if (patient != null)
+            {
+                patient.PhotoLink = photoUrl;
+                await UpdatePatient(patient);
+            }
         }
 
     }

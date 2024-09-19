@@ -2,10 +2,6 @@
 using PatientAPI.Interfaces;
 using PatientAPI.ViewModels.Patient.Request;
 using PatientAPI.ViewModels.Patient.Response;
-using System.Threading.Tasks;
-using OfficeOpenXml;
-using System.IO;
-using System.Linq;
 
 
 namespace PatientAPI.Controllers
@@ -67,5 +63,34 @@ namespace PatientAPI.Controllers
 
             return File(excelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
+
+        [HttpPost("upload-photo/{patientId}")]
+        public async Task<IActionResult> UploadPhoto(int patientId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file uploaded.");
+            }
+
+            var fileName = $"{patientId}_{Path.GetFileName(file.FileName)}";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", fileName);
+
+            if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            }
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            var photoUrl = $"/photos/{fileName}";
+            await _patientService.UpdatePatientPhoto(patientId, photoUrl);
+
+            return Ok(new { PhotoUrl = photoUrl });
+        }
+
+
     }
 }
