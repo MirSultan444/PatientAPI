@@ -6,5 +6,6 @@
         public string Name { get; set; } 
         public int Age { get; set; }
         public string Diagnosis { get; set; }
+        public string PhotoLink { get; set; }
     }
 }

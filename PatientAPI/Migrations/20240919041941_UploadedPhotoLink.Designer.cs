@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PatientAPI.Models;
 
@@ -10,9 +11,11 @@ using PatientAPI.Models;
 namespace PatientAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class ClinicContextModelSnapshot : ModelSnapshot
+    [Migration("20240919041941_UploadedPhotoLink")]
+    partial class UploadedPhotoLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
